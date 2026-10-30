@@ -1,16 +1,20 @@
-﻿---
+---
 name: new-feature
-description: Plan and implement new features, APIs, business logic, UI functionality and integrations.
+description: Lập kế hoạch và triển khai tính năng mới (new feature) - API, business logic, chức năng UI và integration. Plan and implement new features, APIs, business logic, UI functionality and integrations.
 ---
 
 # New Feature
 
-1. Inspect the existing architecture and comparable implementations.
-2. Read applicable shared rules under rules/common/ and rules/feature-development/.
-3. Identify requirements, affected components and compatibility constraints.
-4. Propose an implementation plan before substantial changes.
-5. Follow established conventions and avoid unnecessary dependencies.
-6. Consider validation, authorization, errors, logging and tests.
-7. Implement the smallest complete solution.
-8. Run relevant checks and report actual results.
-9. Summarize changes, risks and remaining work.
+0. Tuân thủ rules/common/knowledge-base.md, mục 1 (tra cứu bài học trước khi điều tra).
+1. Tìm hiểu kiến trúc hiện có và các phần triển khai tương tự.
+2. Đọc các rule dùng chung áp dụng được trong rules/common/ và rules/feature-development/.
+3. Xác định yêu cầu, các thành phần bị ảnh hưởng và ràng buộc tương thích (compatibility).
+4. Đề xuất kế hoạch triển khai trước khi thực hiện thay đổi đáng kể.
+5. Tuân theo convention đã thiết lập và tránh thêm dependency không cần thiết.
+6. Cân nhắc validation, authorization, xử lý lỗi, logging và test.
+   Đối chiếu cách xử lý input và output với các playbook trong rules/security/.
+7. Triển khai giải pháp hoàn chỉnh nhỏ nhất.
+   Không comment code đã sửa (không giải thích lý do thay đổi, không giữ code cũ dạng comment); xem rules/common/common-rules.md.
+8. Chạy các kiểm tra liên quan và báo cáo kết quả thực tế.
+9. Tóm tắt các thay đổi, rủi ro và phần việc còn lại.
+10. Tuân thủ rules/common/knowledge-base.md, mục 2 (ghi lại bài học).

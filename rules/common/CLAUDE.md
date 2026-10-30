@@ -1,15 +1,16 @@
-﻿# Cadena Engineering - Common Rules
+﻿# Cadena Engineering - Quy tắc chung (Common Rules)
 
-Read common-rules.md in this directory before substantial code changes.
+Đọc common-rules.md trong thư mục này trước khi thực hiện thay đổi code đáng kể.
 
-## Task-specific rules
-- Performance: inspect relevant files in rules/performance/.
-- Bug fixing: inspect relevant files in rules/bug-fixing/.
-- Feature development: inspect relevant files in rules/feature-development/.
+## Quy tắc theo loại công việc (Task-specific rules)
+- Performance: xem các file liên quan trong rules/performance/.
+- Bug fixing: xem các file liên quan trong rules/bug-fixing/.
+- Feature development: xem các file liên quan trong rules/feature-development/.
+- Security: xem các playbook liên quan trong rules/security/.
 
-Follow the target project's existing architecture and conventions.
-Preserve business behavior unless explicitly asked to change it.
-Avoid unrelated refactoring.
-Never expose secrets or credentials.
-Never claim tests passed unless they were actually executed.
-Distinguish verified facts from assumptions.
+Tuân theo kiến trúc và quy ước (convention) hiện có của project đích.
+Giữ nguyên hành vi nghiệp vụ (business behavior) trừ khi được yêu cầu thay đổi một cách rõ ràng.
+Tránh refactor không liên quan.
+Không bao giờ để lộ secret hoặc credential.
+Không bao giờ tuyên bố test đã pass nếu test chưa thực sự được chạy.
+Phân biệt rõ sự thật đã kiểm chứng với giả định.
