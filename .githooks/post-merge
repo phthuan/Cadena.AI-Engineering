@@ -1,0 +1,8 @@
+#!/bin/sh
+
+REPO_ROOT="$(git rev-parse --show-toplevel)" || exit 1
+
+powershell.exe -NoProfile -ExecutionPolicy Bypass \
+  -File "$REPO_ROOT/scripts/sync-skills.ps1"
+
+exit $?
