@@ -251,6 +251,7 @@ Phần này chạy ngầm, trước mọi session. Bạn thường không cần 
 
 ```mermaid
 flowchart TD
+    T0["git clone -c core.hooksPath=.githooks"] --> S
     T1["git pull / merge"] --> S
     T2["git rebase / commit --amend"] --> S
     T3["Sửa file trong skills/<br/>(watcher đang chạy)"] --> S
@@ -263,4 +264,4 @@ flowchart TD
 - Sửa `SKILL.md` trong repo: **có hiệu lực ngay** (nhờ Junction).
 - Sửa `scripts/claude-global.template.md`: phải chạy lại `sync-skills.ps1` (watcher không theo dõi file này).
 - `rules/` và `knowledge/`: Claude đọc trực tiếp từ repo, không cần sync.
-- Hook git nằm ở `.githooks/post-merge` và `.githooks/post-rewrite`.
+- Hook git nằm ở `.githooks/post-checkout` (chỉ chạy khi clone), `.githooks/post-merge` và `.githooks/post-rewrite`.

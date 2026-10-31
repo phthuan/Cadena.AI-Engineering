@@ -132,12 +132,20 @@ không dùng sed; nếu đã dùng sed, kiểm tra `git ls-files --eol <file>` h
   TigerConnectCommandBuilder, TigerConnectCommandSender (gửi + log, không ném exception).
 - Đã build: BusinessLayer, TimeAttendance, TigerConnectApi, Cadena.Web; Staffing compile được (post-build MSB4062 như cũ).
   Chưa chạy trên DB/trình duyệt, chưa gọi TigerConnect thật. Format request của get_machine (MachineCode "*") chưa được xác nhận.
+- 2026-10-30 (người dùng xác nhận theo tài liệu API): get_machine PHẢI gửi đúng MachineCode của máy, không dùng "*".
+  SyncTigerConnectEmployeeMachinesCommandHandler gửi MachineCode của máy đang chọn và chỉ cập nhật trạng thái của máy đó
+  (có trong response -> 3; không có và đang 2/3 -> 1); các máy khác của nhân viên giữ nguyên. Đã xóa AllMachines và LoadMachineIDsByCode.
+- 2026-10-30: log nghiệp vụ "skipped" (Warn/Infor) đã bị xóa theo yêu cầu người dùng, chỉ log khi có lỗi (file log lớn).
+  Lỗi cấu hình (ITigerConnectApiClient chưa đăng ký, appSettings sai) dùng Log.Error.
+- 2026-10-30: theo yêu cầu người dùng, code TigerConnect không dùng lambda làm callback: dùng hàm có tên, vòng lặp batch tường minh,
+  PushWorkItem (method group cho AddOnRequestCompleted / QueueBackgroundWorkItem / Task.Run).
+  Màn hình dùng TigerConnectEmployeePushQueue.EnqueueAfterRequest thay vì tự gọi Context.AddOnRequestCompleted.
 
 ## Gán thẻ chấm công sau khi push (2026-10-29, người dùng yêu cầu)
 - Time Attendance ID (TIM_Cards.Code) = Staffing_Employees.ID, để Clock/Upload (ReferenceID = AttendanceID) map được qua MappingRawData.
 - TigerConnectEmployeeCardAssigner chạy sau khi push add thành công lên ít nhất một máy, mỗi nhân viên một ISession + transaction riêng:
   chưa có thẻ hiện hành -> tạo/tái dùng thẻ [EmployeeID] và gán từ hôm nay; thẻ hiện hành khác mã -> AssignToDate = hôm qua, gán thẻ mới từ hôm nay.
-  Bỏ qua (log Warn): có assignment tương lai, thẻ hiện hành bắt đầu hôm nay, thẻ [EmployeeID] inactive/lost hoặc đang thuộc nhân viên khác.
+  Bỏ qua (không log từ 2026-10-30): có assignment tương lai, thẻ hiện hành bắt đầu hôm nay, thẻ [EmployeeID] inactive/lost hoặc đang thuộc nhân viên khác.
 - Dùng entity Card / EmployeeCard (không raw SQL) vì repo không có script CREATE TABLE của TIM_Cards / TIM_EmployeeCards.
   TIM_Cards có UQ_TIM_Code_TenantID; TIM_EmployeeCards không có unique, nên 2 lần push đồng thời cho cùng nhân viên (2 máy khác nhau) hiếm khi có thể tạo trùng assignment.
 - AuditEventListener chỉ ghi audit khi UserAccount.Current != null, nên ISession trên thread nền không lỗi.

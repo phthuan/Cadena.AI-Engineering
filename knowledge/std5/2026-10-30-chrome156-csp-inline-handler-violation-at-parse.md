@@ -23,10 +23,15 @@ Vì vậy mọi attribute on* đều bị báo lỗi trước khi script kịp c
 Chức năng không đổi: handler inline vốn đã bị chặn ở cả hai phiên bản, và listener tạo bằng new Function vẫn chạy.
 
 ## Cách sửa (Fix)
-Chưa sửa code: đây là thay đổi về cách Chrome ghi log, không phải lỗi chức năng.
-Nếu muốn hết log: phía server đổi tên on* thành data-* (ví dụ data-cdn-onclick) trong HtmlResponseRewriter, và để csp-inline-fix.js đọc attribute data-*.
-Rủi ro: DevExpress tự đọc/ghi attribute onclick khi bật/tắt control (SetEnabled), và HTML do callback trả về hoặc setAttribute lúc runtime vẫn sẽ bị báo.
-Giải pháp triệt để là bỏ inline handler ở nguồn.
+Không dùng `script-src-attr 'unsafe-inline'` (đã test là hết lỗi, nhưng pentest sẽ báo lại unsafe-inline). Đã sửa (2026-10-31):
+- Cadena.Web/Framework/InlineEventHandlerRewriter.cs: regex `(\s)(on[a-z]+)(?<=<[a-z][^<>]*)(?=\s*=\s*["'])`
+  đổi on* thành data-cdn-on* trong HTML. Được gọi trong Render của 10 trang khung (BasicForm, ESSBasicForm, ESS/Main, Main, Login,
+  Admin/Login, RBasicForm, MasterDataForm, Authenticate, ForgotPassword), ngay sau bước gắn nonce.
+- Scripts/csp-inline-fix.js: shim override Element.prototype get/set/removeAttribute cho tên on*, để chúng làm việc với data-cdn-on*
+  (DevExpress 16.2 ASPx.Attr dùng đúng 3 hàm này để lưu/khôi phục onclick khi disable/enable; giá trị lưu vào attribute savedonclick).
+  Các selector của phần chuyển handler tìm cả [on*] và [data-cdn-on*].
+- Shim phải chạy trước script DevExpress: csp-inline-fix.js phải nằm trong <head> (RBasicForm trước đây nạp sau </form>).
+Còn sót: Render bỏ qua postback/callback, nên HTML trả về từ UpdatePanel / DevExpress callback có on* thật vẫn báo lỗi khi chèn.
 
 ## Kiểm chứng (Verification)
 Chạy headless Chrome 156 (--enable-logging=stderr) trên các trang test tối giản với CSP qua thẻ meta:
