@@ -1,13 +1,15 @@
 ---
 title: <một dòng: điều gì đã sai, dùng đúng những từ mà người khác sẽ dùng để tìm kiếm>
 project: <project-key>
+branch: <tên branch nguyên văn, hoặc all nếu chung cho mọi branch>
 type: bug | security | performance | feature | other
 keywords: [<nguyên văn thông báo lỗi>, <ClassName>, <MethodName>, <TableName>, <sp_Name>]
 files: [<path/relative/to/product/repo>]
 commit: <short hash của commit sửa lỗi, nếu đã commit>
 date: YYYY-MM-DD
-author: <tên>
+author: <tên người làm task>
 status: active
+confidence: verified | high
 ---
 
 ## Triệu chứng (Symptom)

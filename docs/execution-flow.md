@@ -39,7 +39,7 @@ flowchart TD
     Q2 -- "Không" --> R["Đọc rules chung"]
     R --> K1["Tra knowledge base<br/>(có bài học cũ không?)"]
     K1 --> W["Làm việc + chạy kiểm tra"]
-    W --> K2["Ghi bài học nếu đáng ghi"]
+    W --> K2["Đề xuất bài học nếu đáng ghi<br/>(chỉ ghi khi bạn đồng ý)"]
     K2 --> END["Báo kết quả"]
     DO --> END
 ```
@@ -82,12 +82,12 @@ Ví dụ: `/fix-bug Bấm Save ở Employee Profile báo NullReferenceException,
 ```mermaid
 flowchart TD
     U["Bạn gõ /&lt;skill&gt; + mô tả"] --> L["Claude nạp toàn bộ SKILL.md"]
-    L --> K1["Bước 0: tra knowledge base<br/>(có bài học cũ không?)"]
+    L --> K1["Bước đầu: tra knowledge base<br/>(có bài học cũ không?)"]
     K1 --> R["Đọc rules chung + rules riêng của skill"]
     R --> S["Làm lần lượt từng bước trong SKILL.md"]
     S --> V["Chạy kiểm tra<br/>(chỉ báo pass nếu đã chạy thật)"]
     V --> SUM["Tóm tắt: nguyên nhân, thay đổi, rủi ro"]
-    SUM --> K2["Bước cuối: ghi bài học nếu đáng ghi"]
+    SUM --> K2["Bước cuối: đề xuất bài học nếu đáng ghi<br/>(chỉ ghi khi bạn đồng ý)"]
     K2 --> END["Báo kết quả"]
 ```
 
@@ -98,20 +98,20 @@ Rules mà mỗi skill đọc thêm:
 | `fix-bug` | `rules/common/`, `rules/bug-fixing/` |
 | `fix-bug-security` | `rules/security/` (playbook theo loại lỗ hổng), `rules/common/`, `rules/bug-fixing/` |
 | `enhance-performance` | `rules/common/`, `rules/performance/` |
-| `new-feature` | `rules/common/`, `rules/feature-development/`, đối chiếu input/output với `rules/security/` |
-| `review-code` | `rules/common/`, `performance/`, `bug-fixing/`, `feature-development/`, playbook `rules/security/` |
+| `new-feature` | `rules/common/`, `rules/feature-development/`, playbook `rules/security/` (đối chiếu input/output) |
+| `review-code` | `rules/common/`, `rules/performance/`, `rules/bug-fixing/`, `rules/feature-development/`, playbook `rules/security/` |
 | `move-source` | `rules/common/` |
 | `record-lesson` | Chỉ `rules/common/knowledge-base.md` (phần ghi bài học) |
 
-Mọi skill (trừ `record-lesson`) đều **mở đầu** bằng tra knowledge base và **kết thúc** bằng ghi bài học.
+Mọi skill (trừ `record-lesson`) đều **mở đầu** bằng tra knowledge base (riêng `move-source` và `review-code` xác định phạm vi trước, để biết cần tra theo file và tính năng nào) và **kết thúc** bằng đề xuất bài học (Claude chỉ ghi khi bạn đồng ý; `/record-lesson` là yêu cầu ghi trực tiếp).
 
 Ví dụ các bước của `/fix-bug` (xem [skills/fix-bug/SKILL.md](../skills/fix-bug/SKILL.md)):
 
 ```mermaid
 flowchart LR
-    A0["0. Tra KB"] --> A1["1. Tái hiện lỗi"] --> A2["2. Trace code"] --> A3["3. Đọc rules"]
+    A0["0. Tra KB"] --> A1["1. Đọc rules"] --> A2["2. Tái hiện lỗi"] --> A3["3. Trace code"]
     A3 --> A4["4. Tách sự thật / giả thuyết"] --> A5["5. Tìm root cause"] --> A6["6. Sửa nhỏ nhất"]
-    A6 --> A7["7. Regression test"] --> A8["8. Chạy kiểm tra"] --> A9["9. Tóm tắt"] --> A10["10. Ghi bài học"]
+    A6 --> A7["7. Regression test"] --> A8["8. Chạy kiểm tra"] --> A9["9. Tóm tắt"] --> A10["10. Đề xuất bài học"]
 ```
 
 ---
@@ -148,7 +148,7 @@ Stack trace: EmployeeProfileGeneralView.ascx.cs line 412. Lỗi chỉ xảy ra v
 Chỉ sai với company có nhiều cost center.
 ```
 
-Kết quả: root cause, bản sửa nhỏ nhất, regression test (nếu được), kết quả build/test thật, đường dẫn bài học (nếu có).
+Kết quả: root cause, bản sửa nhỏ nhất, regression test (nếu được), kết quả build/test thật, đề xuất bài học (nếu có).
 
 ### `enhance-performance`: tối ưu hiệu năng
 
@@ -224,7 +224,7 @@ Lưu ý: nếu nguồn, đích hoặc phạm vi chưa rõ, Claude sẽ hỏi tr�
 
 ### `record-lesson`: ghi bài học
 
-Dùng ở cuối tác vụ, trong **cùng session** (skill đọc lại hội thoại).
+Dùng ở cuối task, trong **cùng session** (skill đọc lại hội thoại).
 
 ```text
 /record-lesson
@@ -241,7 +241,7 @@ Kết quả: đường dẫn file bài học (mới, hoặc cập nhật bài c�
 - Dán **nguyên văn** thông báo lỗi và stack trace (knowledge base tìm theo từ khóa này).
 - Nói rõ phạm vi: màn hình, URL, branch, file, khoảng commit.
 - Nói rõ giới hạn: "chỉ audit", "chưa sửa", "không đổi hành vi", "không thêm dependency".
-- Có thể nối skill: `/fix-bug ...` → `/review-code` → `/record-lesson` (nếu chưa tự ghi bài học).
+- Có thể nối skill: `/fix-bug ...` → `/review-code` → `/record-lesson` (nếu muốn ghi bài học mà Claude chưa đề xuất).
 
 ---
 
@@ -255,6 +255,7 @@ flowchart TD
     T1["git pull / merge"] --> S
     T2["git rebase / commit --amend"] --> S
     T3["Sửa file trong skills/<br/>(watcher đang chạy)"] --> S
+    T5["Hook Claude Code: Write/Edit trong skills/,<br/>hoặc gửi prompt khi skill lệch Junction"] --> S
     T4["Chạy tay"] --> S
     S["scripts/sync-skills.ps1"] --> J["Liên kết (Junction)<br/>~/.claude/skills/&lt;name&gt; → repo/skills/&lt;name&gt;"]
     S --> X["Xóa liên kết của skill đã bị xóa"]
@@ -263,5 +264,7 @@ flowchart TD
 
 - Sửa `SKILL.md` trong repo: **có hiệu lực ngay** (nhờ Junction).
 - Sửa `scripts/claude-global.template.md`: phải chạy lại `sync-skills.ps1` (watcher không theo dõi file này).
+- Máy người viết skill có thể dùng hook Claude Code thay watcher: `scripts/skills-hook.ps1` được gọi từ `PostToolUse` (Write|Edit)
+  và `UserPromptSubmit` trong `~/.claude/settings.json`, chỉ chạy sync khi danh sách skill lệch với Junction.
 - `rules/` và `knowledge/`: Claude đọc trực tiếp từ repo, không cần sync.
 - Hook git nằm ở `.githooks/post-checkout` (chỉ chạy khi clone), `.githooks/post-merge` và `.githooks/post-rewrite`.

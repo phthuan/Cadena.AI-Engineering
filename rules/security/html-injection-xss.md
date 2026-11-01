@@ -69,4 +69,5 @@ Encode tại sink, theo đúng ngữ cảnh nơi giá trị được ghi ra:
 - Để retest: gửi cho đội pentest danh sách endpoint và field đã sửa, cùng các payload đã dùng.
 
 ## Bài học liên quan (Related lessons)
-- knowledge/std5/2026-10-26-csp-remove-unsafe-inline-render-review.md (CSP nonce không ngăn được stored XSS).
+- knowledge/std5/_shared/2026-10-27-html-injection-webapi-fullwidth-input-sanitizer.md (chặn HTML injection tại WebAPI).
+- knowledge/std5/_shared/2026-10-26-csp-remove-unsafe-inline-render-review.md (CSP nonce không ngăn được stored XSS).

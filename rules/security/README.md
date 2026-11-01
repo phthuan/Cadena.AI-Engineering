@@ -9,4 +9,4 @@ và bởi review-code, new-feature để ngăn các lỗi tương tự.
 | [rate-limiting.md](rate-limiting.md) | Lack of rate limiting, brute force, OTP brute force, email bombing, resource exhaustion (CWE-307, CWE-770) |
 
 Để thêm playbook: copy `_template.md` thành `<vulnerability>.md`, điền đầy đủ mọi mục, rồi thêm một dòng vào bảng trên.
-Chỉ thêm playbook khi đã gặp loại lỗ hổng đó trong một tác vụ thực tế, không tạo trước.
+Chỉ thêm playbook khi đã gặp loại lỗ hổng đó trong một task thực tế, không tạo trước.

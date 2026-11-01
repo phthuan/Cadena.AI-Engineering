@@ -1,17 +1,17 @@
 ---
 name: review-code
-description: Review code thay đổi với vai trò Software Architect (code review) - kiểm tra chất lượng code và thiết kế, tối ưu, performance, và xem mọi nơi bị ảnh hưởng (caller, luồng liên quan, dữ liệu, cấu hình, test) đã được cập nhật chưa. Review code changes as a Software Architect - check code quality and design, optimization, performance, and whether every affected place (callers, related flows, data, configuration, tests) has been updated.
+description: Review code thay đổi với vai trò Senior Software Architect (code review) - kiểm tra chất lượng code và thiết kế, tối ưu, performance, và xem mọi nơi bị ảnh hưởng (caller, luồng liên quan, dữ liệu, cấu hình, test) đã được cập nhật chưa. Review code changes as a Senior Software Architect - check code quality and design, optimization, performance, and whether every affected place (callers, related flows, data, configuration, tests) has been updated.
 ---
 
 # Review Code
 
-Đóng vai trò Software Architect. Chỉ review; không sửa code trừ khi người dùng yêu cầu sửa.
+Đóng vai trò Senior Software Architect. Chỉ review; không sửa code trừ khi người dùng yêu cầu sửa.
 
-0. Tuân thủ rules/common/knowledge-base.md, mục 1 (tra cứu bài học trước khi điều tra).
-1. Xác định phạm vi review: diff hiện tại (`git diff`, cả staged và unstaged), một branch,
+0. Xác định phạm vi review: diff hiện tại (`git diff`, cả staged và unstaged), một branch,
    một khoảng commit hoặc các file người dùng chỉ định. Nêu rõ phạm vi trước khi review.
-2. Đọc các rule dùng chung áp dụng được trong rules/common/, rules/performance/, rules/bug-fixing/
-   và rules/feature-development/, cùng với hướng dẫn riêng của project đích.
+1. Tuân thủ rules/common/knowledge-base.md, mục 1 (tra cứu bài học trước khi điều tra) cho các file và tính năng trong phạm vi review.
+2. Đọc các rule dùng chung áp dụng được trong rules/common/, rules/performance/, rules/bug-fixing/,
+   rules/feature-development/ và các playbook trong rules/security/, cùng với hướng dẫn riêng của project đích.
 3. Hiểu mục đích của thay đổi và đọc code xung quanh, không chỉ các dòng đã thay đổi.
 
 ## A. Code có tốt không?
@@ -22,7 +22,7 @@ description: Review code thay đổi với vai trò Software Architect (code rev
    coupling, trùng lặp với helper đã có, nhất quán với convention đã thiết lập của project.
 6. Khả năng đọc và bảo trì: đặt tên, kích thước method, dead code, magic value, độ phức tạp không cần thiết.
 7. Security: validation, authorization, injection, dữ liệu nhạy cảm trong log hoặc response.
-   Dùng các playbook trong rules/security/ (mẫu tìm kiếm và mục "Cách sửa sai" (Wrong fixes)) cho phần code đã thay đổi.
+   Áp dụng các playbook security đã đọc ở bước 2 (mẫu tìm kiếm và mục "Cách sửa sai" (Wrong fixes)) cho phần code đã thay đổi.
 
 ## B. Code đã được tối ưu và có hiệu năng tốt chưa?
 
@@ -55,5 +55,5 @@ description: Review code thay đổi với vai trò Software Architect (code rev
 20. Đưa ra một bảng riêng các nơi bị ảnh hưởng từ bước 17.
 21. Nêu rõ những gì chưa được review hoặc không thể kiểm chứng. Không bao giờ tuyên bố test đã pass
     nếu test chưa thực sự được chạy.
-22. Tuân thủ rules/common/knowledge-base.md, mục 2 (ghi lại bài học) khi quá trình review
+22. Tuân thủ rules/common/knowledge-base.md, mục 2 (đề xuất bài học, chỉ ghi khi người dùng đồng ý) khi quá trình review
     phát hiện một pattern không hiển nhiên đáng chia sẻ.

@@ -38,7 +38,7 @@
 - Chỉ validate/đếm ở client (JS).
 - Chỉ dựa vào khóa tài khoản (không chặn spraying, và có thể bị dùng để khóa người khác).
 - Fail-closed khi bảng theo dõi đầy (attacker làm đầy bảng = khóa mọi người).
-- Rải hằng số giới hạn ở nhiều file với default khác nhau (xem lesson ratelimiter-appsetting-defaults-differ).
+- Rải hằng số giới hạn ở nhiều file với default khác nhau (xem bài học ratelimiter-appsetting-defaults-differ).
 
 ## Payload kiểm thử (Test payloads)
 | Payload | Kết quả mong đợi sau khi sửa |
@@ -58,5 +58,5 @@
 - Kiểm tra môi trường: proxy/load balancer (cấu hình TrustedProxies), web farm (bộ đếm trong RAM theo server).
 
 ## Bài học liên quan (Related lessons)
-- knowledge/std5/2026-10-28-lack-of-rate-limiting-login-otp-forgot-password.md
-- knowledge/std5/2026-10-20-ratelimiter-appsetting-defaults-differ.md
+- knowledge/std5/_shared/2026-10-28-lack-of-rate-limiting-login-otp-forgot-password.md
+- knowledge/std5/_shared/2026-10-20-ratelimiter-appsetting-defaults-differ.md

@@ -16,7 +16,7 @@ Làm việc theo hai giai đoạn: AUDIT, sau đó FIX khi người dùng đã p
 1. Phân loại finding: tên trong báo cáo, CWE, hạng mục OWASP, URL/API bị ảnh hưởng, parameter, payload.
    Mở playbook tương ứng trong rules/security/ (rules/security/README.md liệt kê các playbook).
    Nếu không có playbook nào khớp, dùng rules/security/_template.md làm checklist và ghi chú rằng đang thiếu playbook.
-2. Đọc rules/common/, rules/bug-fixing/ và hướng dẫn riêng của project đích.
+2. Đọc các rule dùng chung áp dụng được trong rules/common/ và rules/bug-fixing/, cùng với hướng dẫn riêng của project đích.
 3. Xác định vị trí trường hợp được báo cáo: entry point -> data flow -> sink.
    Xác nhận nguồn dữ liệu do attacker kiểm soát và sink sử dụng nó một cách không an toàn. Tách bạch trường hợp đã xác nhận với trường hợp nghi ngờ.
 4. Variant analysis (phân tích biến thể): tìm trên toàn bộ repository bằng các mẫu source và sink của playbook
@@ -40,10 +40,10 @@ Làm việc theo hai giai đoạn: AUDIT, sau đó FIX khi người dùng đã p
 8. Giữ nguyên dữ liệu hợp lệ và hành vi nghiệp vụ. Dữ liệu đã lưu có thể đã chứa
    payload: quyết định cùng người dùng nên làm sạch dữ liệu đó hay dựa vào output encoding.
 9. Thêm test: các payload tấn công của playbook (kỳ vọng bị vô hiệu hóa) cùng với input hợp lệ (kỳ vọng không đổi).
-   Chạy các test và build liên quan; chỉ báo cáo kết quả thực tế.
+   Build và chạy các test liên quan; chỉ báo cáo kết quả thực tế.
 10. Báo cáo: từng mục đã sửa / chưa sửa / cần xác nhận, rủi ro còn lại (residual risk),
     và các bước hoặc payload chính xác để kiểm chứng bằng re-scan hoặc pentest retest.
-11. Tuân thủ rules/common/knowledge-base.md, mục 2 (ghi lại bài học).
+11. Tuân thủ rules/common/knowledge-base.md, mục 2 (đề xuất bài học, chỉ ghi khi người dùng đồng ý).
     Nếu loại lỗ hổng này chưa có playbook, đề xuất một file mới trong rules/security/ dựa trên _template.md.
 
 ## An toàn (Safety)
