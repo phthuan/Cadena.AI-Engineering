@@ -52,8 +52,14 @@ description: Review code thay đổi với vai trò Senior Software Architect (c
     (sẵn sàng / sẵn sàng kèm góp ý nhỏ / cần sửa).
 19. Liệt kê các phát hiện theo mức độ nghiêm trọng (Critical, Major, Minor, Suggestion). Với mỗi phát hiện, nêu
     file và dòng, vấn đề, vì sao quan trọng, và cách sửa cụ thể.
-20. Đưa ra một bảng riêng các nơi bị ảnh hưởng từ bước 17.
-21. Nêu rõ những gì chưa được review hoặc không thể kiểm chứng. Không bao giờ tuyên bố test đã pass
+20. Đưa ra một mục riêng "Đánh giá performance" từ phần B: liệt kê từng vấn đề kèm file và dòng,
+    tác động, trạng thái đã xác nhận (confirmed) hoặc nghi ngờ (suspected) cùng cách xác nhận.
+    Nếu không phát hiện vấn đề, ghi rõ "Không phát hiện vấn đề performance" và các khía cạnh đã kiểm tra.
+21. Đưa ra một bảng riêng các nơi bị ảnh hưởng từ bước 17.
+22. Kết thúc bằng mục "Tóm tắt cần sửa": checklist `- [ ]` ngắn gọn, sắp theo mức độ nghiêm trọng
+    (Critical → Suggestion), gộp các phát hiện ở bước 19, 20 và các nơi còn thiếu (missing) ở bước 21.
+    Mỗi dòng gồm mức độ, file và dòng, và việc cần làm. Nếu không có gì cần sửa, ghi rõ "Không có".
+23. Nêu rõ những gì chưa được review hoặc không thể kiểm chứng. Không bao giờ tuyên bố test đã pass
     nếu test chưa thực sự được chạy.
-22. Tuân thủ rules/common/knowledge-base.md, mục 2 (đề xuất bài học, chỉ ghi khi người dùng đồng ý) khi quá trình review
+24. Tuân thủ rules/common/knowledge-base.md, mục 2 (đề xuất bài học, chỉ ghi khi người dùng đồng ý) khi quá trình review
     phát hiện một pattern không hiển nhiên đáng chia sẻ.

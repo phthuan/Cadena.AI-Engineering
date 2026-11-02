@@ -15,6 +15,7 @@
 - Với tính năng mới, cân nhắc validation, security, xử lý lỗi (error handling) và test.
 - Phân biệt rõ sự thật đã kiểm chứng với giả định.
 - Không bao giờ tuyên bố test đã pass nếu test chưa thực sự được chạy.
+- Khi viết hoặc chạy test, tuân thủ rules/common/testing.md (baseline, phân loại lỗi, Database testing, báo cáo).
 - Không bao giờ để lộ secret, token hoặc credential.
 
 ## Không comment code đã sửa

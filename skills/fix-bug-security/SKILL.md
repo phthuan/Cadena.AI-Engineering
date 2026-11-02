@@ -39,8 +39,11 @@ Làm việc theo hai giai đoạn: AUDIT, sau đó FIX khi người dùng đã p
    Không comment code đã sửa (không giải thích lý do sửa, không giữ code cũ dạng comment); xem rules/common/common-rules.md.
 8. Giữ nguyên dữ liệu hợp lệ và hành vi nghiệp vụ. Dữ liệu đã lưu có thể đã chứa
    payload: quyết định cùng người dùng nên làm sạch dữ liệu đó hay dựa vào output encoding.
-9. Thêm test: các payload tấn công của playbook (kỳ vọng bị vô hiệu hóa) cùng với input hợp lệ (kỳ vọng không đổi).
-   Build và chạy các test liên quan; chỉ báo cáo kết quả thực tế.
+9. Trước khi sửa, chạy test baseline liên quan; xem rules/common/testing.md.
+   Thêm test: các payload tấn công của playbook bị chặn hoặc vô hiệu hóa (output đã được encode, request bị từ chối,
+   không truy cập được tài nguyên trái phép) cùng với input hợp lệ, gồm các field hợp lệ chứa HTML, URL
+   hoặc ký tự đặc biệt ở bước 6, vẫn hoạt động như trước. Khi khả thi, xác nhận test payload FAIL trên code chưa sửa.
+   Build và chạy test theo rules/common/testing.md; báo cáo command thực tế và kết quả PASS/FAIL/SKIP.
 10. Báo cáo: từng mục đã sửa / chưa sửa / cần xác nhận, rủi ro còn lại (residual risk),
     và các bước hoặc payload chính xác để kiểm chứng bằng re-scan hoặc pentest retest.
 11. Tuân thủ rules/common/knowledge-base.md, mục 2 (đề xuất bài học, chỉ ghi khi người dùng đồng ý).
